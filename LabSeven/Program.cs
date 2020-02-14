@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using LabOne;
+using LabSeven;
 
 namespace LabFive
 {
@@ -12,7 +13,7 @@ namespace LabFive
             Console.OutputEncoding = Encoding.UTF8;
             List<GeographicalUnit> countries = new List<GeographicalUnit>();
             List<LogEntry> log = new List<LogEntry>();
-            ConsoleApp.Execute(countries, log);
+            Sorter.Execute();
         }
     }
 }

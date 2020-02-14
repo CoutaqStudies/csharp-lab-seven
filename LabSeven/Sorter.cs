@@ -8,11 +8,49 @@ namespace LabSeven
 {
     class Sorter
     {
+        public static void Execute()
+        {
+            int[] nums = { 4, 2, 3, 5, 1 };
+            Console.WriteLine("Selection: ");
+            /*foreach (int num in ShellSort(nums))
+            {
+                Console.WriteLine(num);
+            }*/
+            Console.WriteLine("Insertion: ");
+            foreach (int num in InsertionSort(nums))
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("Bubble: ");
+            foreach (int num in BubbleSort(nums))
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("Ripple: ");
+            foreach (int num in RippleSort(nums))
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("Shell: ");
+            foreach (int num in ShellSort(nums))
+            {
+                Console.WriteLine(num);
+            }
+        }
         public static Boolean isListSorted(List<int> list)
         {
             for(int i = 0; i < list.Count-1; i++)
             {
                 if((list[i]>list[i+1]))
+                    return false;
+            }
+            return true;
+        }
+        public static Boolean isListSorted(int[] list)
+        {
+            for (int i = 0; i < list.Length - 1; i++)
+            {
+                if ((list[i] > list[i + 1]))
                     return false;
             }
             return true;
@@ -27,44 +65,85 @@ namespace LabSeven
             }
             return finalList;
         }
-        public static List<int> InsertionSort(List<int> list)
+        public static int[] SelectionSort(int[] list)
         {
-            List<int> finalList = new List<int>();
-            while (!isListSorted(finalList) || finalList.Count<list.Count)
+            while (list.Count > 0)
             {
-                if(finalList.Count<list.Count)
-                finalList.Add(list[finalList.Count]);
-
-                for (int i = 0; i < finalList.Count-1; i++)
-                {
-                    if (finalList[i] > finalList[i + 1])
-                    {
-                        finalList.Insert(i, finalList[i+1]);
-                        finalList.RemoveAt(i+2);
-                    }
-                }
+                int smallestPop = list.Min(country => country.getPopulation());
+                finalList.Add(list.Find(country => country.getPopulation() == smallestPop));
+                list.Remove(list.Find(country => country.getPopulation() == smallestPop));
             }
             return finalList;
         }
-        // TODO: 
-        /*public static List<int> InsertionSort(List<int> list)
+        public static int[] InsertionSort(int[] list)
         {
-            List<int> finalList = new List<int>();
-            while (!isListSorted(finalList) || finalList.Count < list.Count)
+            while (!isListSorted(list))
             {
-                if (finalList.Count < list.Count)
-                    finalList.Add(list[finalList.Count]);
-
-                for (int i = 0; i < finalList.Count - 1; i++)
+                for (int i = 0; i < list.Length-1; i++)
                 {
-                    if (finalList[i] > finalList[i + 1])
+                    if (list[i] > list[i + 1])
                     {
-                        finalList.Insert(i, finalList[i + 1]);
-                        finalList.RemoveAt(i + 2);
+                        int tmp = list[i];
+                        list[i] = list[i + 1];
+                        list[i + 1] = tmp;
                     }
                 }
             }
-            return finalList;
-        }*/
+            return list;
+        }
+        public static int[] BubbleSort(int[] list)
+        {
+            while(!isListSorted(list))
+            for(int i = 0; i < list.Length-1; i++)
+            {
+                if (list[i] > list[i + 1])
+                {
+                    int tmp = list[i];
+                    list[i] =  list[i + 1];
+                    list[i+1] = tmp;
+                }
+            }
+            return list;
+        }
+        public static int[] RippleSort(int[] list)
+        {
+            while (!isListSorted(list))
+                for (int i = 0; i < list.Length - 1; i++)
+                {
+                    if (list[i] > list[i + 1])
+                    {
+                        int tmp = list[i];
+                        list[i] = list[i + 1];
+                        list[i + 1] = tmp;
+                    }
+                }
+            while (!isListSorted(list))
+                for (int i = list.Length - 1 ; i >0; i--)
+                {
+                    if (list[i] > list[i - 1])
+                    {
+                        int tmp = list[i];
+                        list[i] = list[i + 1];
+                        list[i + 1] = tmp;
+                    }
+                }
+            return list;
+        }
+        public static int[] ShellSort(int[] list)
+        {
+            for (int s = (list.Length-1)/2; s>0; s /= 2)
+            {
+                for (int i = 0; i <= list.Length; i++)
+                {
+                    if ((i + s) < (list.Length - 1) && list[i] > list[i + s])
+                    {
+                        int tmp = list[i];
+                        list[i] = list[i + 1];
+                        list[i + 1] = tmp;
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

@@ -285,7 +285,7 @@ namespace LabFive
                     Execute(countries,log);
                     break;
                 case 7:
-                    countries = Sorter.InsertionSort(countries);
+                    countries = Sorter.SelectionSort(countries);
                     Execute(countries, log);
                     break;
                 case 8:
