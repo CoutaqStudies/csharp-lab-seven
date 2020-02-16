@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Cds.Folders;
 
 namespace LabSeven
 {
@@ -13,6 +14,8 @@ namespace LabSeven
     {
         public static void Execute()
         {
+            String filepath = @"./sorted.dat";
+            FileStream fs = new FileStream(filepath., FileMode.OpenOrCreate, FileAccess.Write);
             Stopwatch stopWatch = new Stopwatch();
             TimeSpan ts;
             int[] nums = new int[100000];
