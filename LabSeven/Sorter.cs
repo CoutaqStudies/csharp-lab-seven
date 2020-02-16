@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using Cds.Folders;
 
 namespace LabSeven
 {
@@ -14,16 +12,15 @@ namespace LabSeven
     {
         public static void Execute()
         {
-            String filepath = @"./sorted.dat";
-            FileStream fs = new FileStream(filepath., FileMode.OpenOrCreate, FileAccess.Write);
+            String filepath = "sorted.dat";
             Stopwatch stopWatch = new Stopwatch();
             TimeSpan ts;
-            int[] nums = new int[100000];
+            int[] nums = new int[100];
             int[] dummyList = new int[nums.Length];
             Random rand = new Random();
             for(int i = 0; i<nums.Length; i++)
             {
-                nums[i] = rand.Next(nums.Length);
+                nums[i] = rand.Next(500);
             }
             Console.WriteLine("----Random: ");
             Console.WriteLine("Selection: ");
@@ -32,7 +29,14 @@ namespace LabSeven
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
-
+            /*String[] lines = new String[newList.Length];
+            for(int i = 0; i< newList.Length;i++)
+            {
+                lines[i] = newList[i].ToString();
+            }
+            if(!File.Exists(Coutaq.OsHelper.CompatiblePath(filepath, true)))
+                File.Create(Coutaq.OsHelper.CompatiblePath(filepath, true));
+            System.IO.File.WriteAllLines(Coutaq.OsHelper.CompatiblePath(filepath, true), lines);*/
             Console.WriteLine("Insertion: ");
             stopWatch.Restart();
             dummyList = nums;
@@ -60,7 +64,7 @@ namespace LabSeven
             Console.WriteLine("Shell: ");
             stopWatch.Restart();
             dummyList = nums;
-            ShellSort(dummyList);
+            ShellSortAdaptedNotStolen(dummyList);
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
@@ -101,7 +105,7 @@ namespace LabSeven
             Console.WriteLine("Shell: ");
             stopWatch.Restart();
             dummyList = nums;
-            ShellSort(dummyList);
+            ShellSortAdaptedNotStolen(dummyList);
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
@@ -142,7 +146,7 @@ namespace LabSeven
             Console.WriteLine("Shell: ");
             stopWatch.Restart();
             dummyList = nums;
-            ShellSort(dummyList);
+            ShellSortAdaptedNotStolen(dummyList);
             stopWatch.Stop();
             ts = stopWatch.Elapsed;
             Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
@@ -219,6 +223,7 @@ namespace LabSeven
             }
             Console.WriteLine("Checks: " + checks);
             Console.WriteLine("Swaps: " + swaps);
+            
             return newList;
         }
         public static int[] BubbleSort(int[] list)
@@ -292,6 +297,7 @@ namespace LabSeven
             int checks = 0;
             int swaps = 0;
             int[] newList = (int[])list.Clone();
+            int step = newList.Length;
             for (int s = (newList.Length-1)/2; s>0; s /= 2)
             {
                 for (int i = 0; i <= newList.Length; i++)
@@ -306,9 +312,36 @@ namespace LabSeven
                     }
                 }
             }
+
+            return newList;
+        }
+        public static void ShellSortAdaptedNotStolen(int[] array)
+        {
+            int checks = 0;
+            int swaps = 0;
+            int step = array.Length / 2;
+            while (step > 0)
+            {
+                for (int i = 0; i < array.Length - step; i++)
+                {
+                    while (i >= 0 && array[i] < array[i + step])
+                    {
+                        swaps++;
+                        int tmp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = tmp;
+                        i -= step;
+                        checks++;
+                    }
+                }
+                step = step / 2;
+            }
             Console.WriteLine("Checks: " + checks);
             Console.WriteLine("Swaps: " + swaps);
-            return newList;
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.WriteLine(array[i]);
+            }
         }
     }
 }

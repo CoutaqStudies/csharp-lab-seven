@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Coutaq">
+      <HintPath>..\..\OsHelper\OsHelper\bin\Release\netcoreapp3.1\Coutaq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
