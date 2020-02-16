@@ -1,8 +1,11 @@
 ﻿using LabOne;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace LabSeven
 {
@@ -10,32 +13,136 @@ namespace LabSeven
     {
         public static void Execute()
         {
-            int[] nums = { 4, 2, 3, 5, 1 };
+            Stopwatch stopWatch = new Stopwatch();
+            TimeSpan ts;
+            int[] nums = new int[100000];
+            int[] dummyList = new int[nums.Length];
+            Random rand = new Random();
+            for(int i = 0; i<nums.Length; i++)
+            {
+                nums[i] = rand.Next(nums.Length);
+            }
+            Console.WriteLine("----Random: ");
             Console.WriteLine("Selection: ");
-            /*foreach (int num in ShellSort(nums))
-            {
-                Console.WriteLine(num);
-            }*/
+            stopWatch.Start();
+            SelectionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
             Console.WriteLine("Insertion: ");
-            foreach (int num in InsertionSort(nums))
-            {
-                Console.WriteLine(num);
-            }
+            stopWatch.Restart();
+            dummyList = nums;
+            InsertionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
             Console.WriteLine("Bubble: ");
-            foreach (int num in BubbleSort(nums))
-            {
-                Console.WriteLine(num);
-            }
+            stopWatch.Restart();
+            dummyList = nums;
+            BubbleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
             Console.WriteLine("Ripple: ");
-            foreach (int num in RippleSort(nums))
-            {
-                Console.WriteLine(num);
-            }
+            stopWatch.Restart();
+            dummyList = nums;
+            RippleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
             Console.WriteLine("Shell: ");
-            foreach (int num in ShellSort(nums))
-            {
-                Console.WriteLine(num);
-            }
+            stopWatch.Restart();
+            dummyList = nums;
+            ShellSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+            //sorted
+            Console.WriteLine("----Sorted: ");
+            dummyList = ShellSort(dummyList);
+            Console.WriteLine("Selection: ");
+            stopWatch.Start();
+            SelectionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Insertion: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            InsertionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Bubble: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            BubbleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Ripple: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            RippleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Shell: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            ShellSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+            //sorted backwards
+            Array.Reverse(dummyList);
+            Console.WriteLine("----Reverse: ");
+            Console.WriteLine("Selection: ");
+            stopWatch.Start();
+            SelectionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Insertion: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            InsertionSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Bubble: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            BubbleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Ripple: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            RippleSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
+
+            Console.WriteLine("Shell: ");
+            stopWatch.Restart();
+            dummyList = nums;
+            ShellSort(dummyList);
+            stopWatch.Stop();
+            ts = stopWatch.Elapsed;
+            Console.WriteLine("Time: "+ts.Seconds + ":" + ts.Milliseconds);
         }
         public static Boolean isListSorted(List<int> list)
         {
@@ -67,83 +174,138 @@ namespace LabSeven
         }
         public static int[] SelectionSort(int[] list)
         {
-            while (list.Count > 0)
+            int[] newList = (int[])list.Clone();
+            int checks = 0;
+            int swaps = 0;
+            for (int i = 0; i < newList.Length - 1; i++)
             {
-                int smallestPop = list.Min(country => country.getPopulation());
-                finalList.Add(list.Find(country => country.getPopulation() == smallestPop));
-                list.Remove(list.Find(country => country.getPopulation() == smallestPop));
+                int sortedIndex = i;
+                for (int j = i + 1; j < newList.Length; j++)
+                {
+                    checks++;
+                    if (newList[j] < newList[sortedIndex])
+                        sortedIndex = j;
+                }
+                swaps++;
+                int tmp = newList[i];
+                newList[i] = newList[sortedIndex];
+                newList[sortedIndex] = tmp;
             }
-            return finalList;
+            Console.WriteLine("Checks: " + checks);
+            Console.WriteLine("Swaps: " + swaps);
+            return newList;
         }
         public static int[] InsertionSort(int[] list)
         {
-            while (!isListSorted(list))
+            int[] newList = (int[])list.Clone();
+            int checks = 0;
+            int swaps = 0;
+            while (!isListSorted(newList))
             {
-                for (int i = 0; i < list.Length-1; i++)
+                for (int i = 0; i < newList.Length-1; i++)
                 {
-                    if (list[i] > list[i + 1])
+                    checks++;
+                    if (newList[i] > newList[i + 1])
                     {
-                        int tmp = list[i];
-                        list[i] = list[i + 1];
-                        list[i + 1] = tmp;
+                        swaps++;
+                        int tmp = newList[i];
+                        newList[i] = newList[i + 1];
+                        newList[i + 1] = tmp;
                     }
                 }
             }
-            return list;
+            Console.WriteLine("Checks: " + checks);
+            Console.WriteLine("Swaps: " + swaps);
+            return newList;
         }
         public static int[] BubbleSort(int[] list)
         {
-            while(!isListSorted(list))
-            for(int i = 0; i < list.Length-1; i++)
+            int[] newList = (int[])list.Clone();
+            int checks = 0;
+            int swaps = 0;
+            Boolean sorted = true;
+            do
             {
-                if (list[i] > list[i + 1])
+                sorted = true;
+                for ( int sortedIndex = 0; sortedIndex < newList.Length - 1; sortedIndex++)
                 {
-                    int tmp = list[i];
-                    list[i] =  list[i + 1];
-                    list[i+1] = tmp;
+                    for(int i = sortedIndex; i<newList.Length-1; i++)
+                    {
+                        checks++;
+                        if (newList[i] > newList[i+1])
+                        {
+                            swaps++;
+                            int tmp = newList[i];
+                            newList[i] = newList[i + 1];
+                            newList[i + 1] = tmp;
+                            sorted = false;
+                        }
+                    }
                 }
-            }
-            return list;
+            } while (!sorted);
+            Console.WriteLine("Checks: " + checks);
+            Console.WriteLine("Swaps: " + swaps);
+            return newList;
         }
         public static int[] RippleSort(int[] list)
         {
-            while (!isListSorted(list))
-                for (int i = 0; i < list.Length - 1; i++)
-                {
-                    if (list[i] > list[i + 1])
-                    {
-                        int tmp = list[i];
-                        list[i] = list[i + 1];
-                        list[i + 1] = tmp;
-                    }
-                }
-            while (!isListSorted(list))
-                for (int i = list.Length - 1 ; i >0; i--)
-                {
-                    if (list[i] > list[i - 1])
-                    {
-                        int tmp = list[i];
-                        list[i] = list[i + 1];
-                        list[i + 1] = tmp;
-                    }
-                }
-            return list;
-        }
-        public static int[] ShellSort(int[] list)
-        {
-            for (int s = (list.Length-1)/2; s>0; s /= 2)
+            int checks = 0;
+            int swaps = 0;
+            int[] newList = (int[])list.Clone();
+            while (!isListSorted(newList))
             {
-                for (int i = 0; i <= list.Length; i++)
+                for (int i = 0; i < newList.Length - 1; i++)
                 {
-                    if ((i + s) < (list.Length - 1) && list[i] > list[i + s])
+                    checks++;
+                    if (newList[i] > newList[i + 1])
                     {
-                        int tmp = list[i];
-                        list[i] = list[i + 1];
-                        list[i + 1] = tmp;
+                        swaps++;
+                        int tmp = newList[i];
+                        newList[i] = newList[i + 1];
+                        newList[i + 1] = tmp;
+                    }
+                }
+            }    
+            while (!isListSorted(newList))
+            {
+                for (int i = newList.Length - 1; i > 0; i--)
+                {
+                    checks++;
+                    if (newList[i] > newList[i - 1])
+                    {
+                        swaps++;
+                        int tmp = newList[i];
+                        newList[i] = newList[i + 1];
+                        newList[i + 1] = tmp;
                     }
                 }
             }
-            return list;
+            Console.WriteLine("Checks: " + checks);
+            Console.WriteLine("Swaps: " + swaps);
+            return newList;
+        }
+        public static int[] ShellSort(int[] list)
+        {
+            int checks = 0;
+            int swaps = 0;
+            int[] newList = (int[])list.Clone();
+            for (int s = (newList.Length-1)/2; s>0; s /= 2)
+            {
+                for (int i = 0; i <= newList.Length; i++)
+                {
+                    checks++;
+                    if ((i + s) < (newList.Length - 1) && newList[i] > newList[i + s])
+                    {
+                        swaps++;
+                        int tmp = newList[i];
+                        newList[i] = newList[i + 1];
+                        newList[i + 1] = tmp;
+                    }
+                }
+            }
+            Console.WriteLine("Checks: " + checks);
+            Console.WriteLine("Swaps: " + swaps);
+            return newList;
         }
     }
 }
