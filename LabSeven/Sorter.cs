@@ -19,7 +19,7 @@ namespace LabSeven
             Random rand = new Random();
             for(int i = 0; i<nums.Length; i++)
             {
-                nums[i] = rand.Next();
+                nums[i] = rand.Next(1000000);
             }
             Console.WriteLine("----Random: ");
             Console.WriteLine("Selection: ");
