@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LabOne;
-using LabSeven;
 
-namespace LabFive
+namespace LabSeven
 {
     class Program
     {

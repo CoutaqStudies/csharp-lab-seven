@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using LabOne;
-using LabSeven;
 
-namespace LabFive
+namespace LabSeven
 {
     public class ConsoleApp
     {

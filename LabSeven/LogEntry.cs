@@ -1,7 +1,8 @@
 ﻿//written by Coutaq
+
 using System;
 
-namespace LabOne
+namespace LabSeven
 {
     public class LogEntry
     {

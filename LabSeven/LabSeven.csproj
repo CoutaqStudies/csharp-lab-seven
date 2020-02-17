@@ -9,6 +9,9 @@
     <Reference Include="Coutaq">
       <HintPath>..\..\OsHelper\OsHelper\bin\Release\netcoreapp3.1\Coutaq.dll</HintPath>
     </Reference>
+    <Reference Include="Coutaq, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\CoutaqOsHelper.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
